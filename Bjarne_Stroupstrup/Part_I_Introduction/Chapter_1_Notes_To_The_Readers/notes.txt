@@ -1,0 +1,5 @@
+The book is heavily cross-referenced. He says that if you work through the tour, then you 
+should have enough of a grip on the book to use the rest of it as a reference. This means I 
+must carefully and slowly study and learn all topics in the tour. 
+
+What does he mean by 'model of computation'?
