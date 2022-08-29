@@ -1,0 +1,62 @@
+28 Aug 2022
+The point of this section is to provide an overview of C++
+without going into too much detail. 
+Other than the most basic language facilities we will hear
+about structures, classes, and enumerations. 
+He'll talk a bit a bout separate compilation, namespaces, 
+and error handling. 
+
+- Model of memory and computation, along with other basic facilities. Chapter discusses the 
+aspects of the language that support 'procedural' programming. 
+
+- Gives an overview of the entire language, does not talk about the differences in C, C++98, 
+or what's new in C++11
+
+2.2 The compilation process has several steps
+1) The preprocessor processes the file and deals with all # directives. Includes, Define, and
+preprocessor macros, etc. I ran 'clang -E example.cpp' and it appended what looks like the 
+entirely of the header file (27000~ lines) the top of my .cpp file. File was 735K
+2) The compiler compiles everything down to a binary object file (.o) that the linker then
+links together. I ran 'clang -c example.cpp' and it output example.o. File was 2.6K Clearly 
+it reduces the file size. I also ran the proprocessor against the minimal program and it just 
+added a handfull of line that look preprocessor directives themselves (?).
+3) The linkers job is to take all the object files and 'link' them into an executable binary. 
+
+For g++ you can specifify the standard you want to compile by using -std=C++20, or whatever
+standard you want to use. 
+
+{} represents grouping in C++
+
+<< writes it's second arg (right) onto it's first (left)
+
+return type 'void' indicates that that function does not return a value 
+
+2.2.2 
+A Type definesa set of possible values for and a set of operations.
+An Object is some memory that holds a value of some type.
+A Value is set of bits interpretted according to a type.
+A Variable is a named object.
+
+C++ provides several fundamental types including bool, char, int, double which coorespond 
+directly to hardware facilities and which have a fixed size measured in bytes. These types
+are implementation defined, which means a char doesn't always have to be an 8 bit bytes on 
+every system. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
