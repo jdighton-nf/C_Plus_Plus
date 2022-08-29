@@ -56,8 +56,12 @@ and declare it as a const in the function signature, then the program won't comp
 to change the data (ie. *reference = new value) or something similar. seems to just be another 
 layer of the static type checking system
 
-
-
+not 100% sure about the differences between " " and ' '. 
+'A' is a char literal. 
+"ABC" is a string literal which is an array of char
+You can't compare 'A' to "B" with == because there isn't a conversion that makes sense. 
+"a" is a char array and returns a pointer to first element 
+ie. const char*, *"a" gives you 'a'
 
 
 
