@@ -42,7 +42,19 @@ directly to hardware facilities and which have a fixed size measured in bytes. T
 are implementation defined, which means a char doesn't always have to be an 8 bit bytes on 
 every system. 
 
+{} list initialization does NOT allow narrowing. You can also do ={} where you're 
+reassigning to an already initialized value. 
 
+If you try to initialize a value with a type that would result in truncation with {}, it'll
+throw a fit. Unless you use static_cast<T>(value) it'll raise an error and won't compile. 
+Needing to use a static_cast<> indicates a design error. Theres not a great reason to 
+cast a double as an int, etc. 
+
+const is mainly used for specifying interfaces and protecting data when passing into functions
+this seems to be more of a compiler time check because if you pass into a reference to something
+and declare it as a const in the function signature, then the program won't compile if you try
+to change the data (ie. *reference = new value) or something similar. seems to just be another 
+layer of the static type checking system
 
 
 
