@@ -63,6 +63,31 @@ You can't compare 'A' to "B" with == because there isn't a conversion that makes
 "a" is a char array and returns a pointer to first element 
 ie. const char*, *"a" gives you 'a'
 
+Pointers, Arrays, and Loops. 
+The size of an array must be a constant expression.
+
+& is the address of operator
+you can use this in range-for statements to pass by ref instead of by copy 
+a reference cannot be made to refer to a different object after initialization 
+
+You should check your pointers to make sure they point at what they're supposed to point at. 
+C-style string are 0 terminated. Something like this 'this is a string\0' and you know you've gone past the last char when you find \0;
+In order code, 0 or NULL is usually used instead of nullptr. nullptr avoids confusion between 0 and NULL. 
+
+I think that I understand everything that has been presented so far. I'm trying to take it slow and really work through all the examples so that later on I don't 
+get caught flat footed. 
+
+2.3 User defines types
+
+
+
+
+
+
+
+
+
+
 
 
 
