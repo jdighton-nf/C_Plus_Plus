@@ -135,9 +135,62 @@ Learned about typedef on my own. Basically allows you to establish type aliases 
 of thinking of particular variables as ints you could think of them as score_types or some Other
 more relevant data type. It's a form of primitive abstraction. 
 
-I'm still not 100% about enums but I've done the excersizes and I kind of understand.
+I'm still not 100% about enums but I've done the excersizes and I kind of understand. Still not sure
+what a good application for enums would be. Probably just need to see more examples which I'll make A
+point to look into after the "tour". 
 
-2.4 Modularity 
+2.4 Modularity 'modularity_1.cpp'
+programs are Developed as many smaller parts. You must have clearly defined interactions between these parts or you will soon
+loose the plot and have a difficult time implementing your design. 
+You must distinguish betwen interface and implementation. 
+interfaces are represented as declarations. 
 
+You can declare member elements such as an int or pointer to an array within the class declaration. probably want those to be private. 
+Then you can declare member functions of a class and either define them within the class block, or elsewhere with ClassName::functionName 
+Member functions have access to the private members of the class. 
 
+2.4.1 Seprate Compilation 
+It's possible to separate declarations and definitions into different files. 
+Vector.h    declarations
+Vector.cpp  definitions, includes the header
+VectorUser.cpp includes the header 
+
+Should including the header somehow automatically
+cause the Name.cpp file to get pulled in somehow? 
+problem: Nowhere are my definitions included. 
+
+solution: simply doing clang++ VectorUser.cpp won't work because it doesn't have the Vector.cpp implementation code
+you have do specify BOTH to the complier. This is probably where understanding build tasks would be nice. 
+"clang++ Vector.cpp VectorUser.cpp -o VectorTest" don't need to specify the Vector.h because it's included already 
+
+2.4.2 Namespaces
+Allows you to group declarations together in their own namespace where they cannot collid with the same names in other namespaces. 
+
+2.4.3 Error Handling 
+Use it.
+try / catch etc.
+you'll need to include stdexcept. also learned that exception types like out_of_range are TYPES, which means that when passed into 
+catch you can access the what() by doing somethign like catch(ExceptType e){std::string error = e.what()}
+
+2.4.3.2 Invariants
+When we define a function we should consider what preconditions must be met for the function call to suceed, and think about if it's feasable to 
+test for those conditions. conditions that MUST always be met are part of the INVARIANT. 
+
+Not extremely germain to invariants but the author does mention half-open ranges which are written as [range), this basically means that the range
+is left-inclusive, but right-exclusive. the right most value is NOT part of the range. maybe it's a \0 like in a C-style string or something or it 
+could like where an array can be said to have 5 elements, but you can't access element 5 because numbering starts at 0. so the range would be 
+[number_of_elements)
+
+A statement about what is assumed to be true about the object during its like is the INVARIANT of the object. 
+For example a Vector cannot have -23 elements because that makes no sense. 
+
+Maybe it would make sense to force all member functions to be wrapped in an invariant-enforcer function, or to make each one of them call a
+function that enforces the invariant before returning. 
+
+The notion of invariants is central to the design of classes. They help us understand exactly what we want and they force us to be specific. 
+
+2.4.3.3 Static Assertions
+maybe we've written an application that does a lot of math with huge numbers. we need to make sure the hardware on the system we're on
+can support this with suffiently large ints. an unsigned 32bit int (4 bytes) can hold up to 2,147,483,647 and if this is not large enough
+we need to figure out a work-around or else refuse to compile. 
 
