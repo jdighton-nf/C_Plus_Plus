@@ -124,9 +124,20 @@ access, write/read, and act upon the data in some way.
 2.3.3 Emumerations
 I have no idea what these are. They seem silly, What am I missing?
 Seems like it's just mapping things to integers? 
+Sort of seems like namespaces but for types? 
+"Enumerations are used to represent small sets of integer values" 
+Maybe it's just easier to use enums than variable names? Don't descriptive variable names
+solve the same problem though? 
 
+Integral Constants are whole numbers pretty much. ( I think )
 
+Learned about typedef on my own. Basically allows you to establish type aliases so that instead
+of thinking of particular variables as ints you could think of them as score_types or some Other
+more relevant data type. It's a form of primitive abstraction. 
 
+I'm still not 100% about enums but I've done the excersizes and I kind of understand.
+
+2.4 Modularity 
 
 
 
