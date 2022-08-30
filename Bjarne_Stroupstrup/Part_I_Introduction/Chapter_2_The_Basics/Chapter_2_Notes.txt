@@ -77,24 +77,53 @@ In order code, 0 or NULL is usually used instead of nullptr. nullptr avoids conf
 I think that I understand everything that has been presented so far. I'm trying to take it slow and really work through all the examples so that later on I don't 
 get caught flat footed. 
 
-2.3 User defines types
+2.3 User defined types
+The built-in types and operations are rich, but low level. Higher level tools and abstractions
+can be built from what the languge provides. Types built utilizing C++'s abstraction mechanisms
+are called 'user defined types.'
+They are called classes and enumerations. I do not know what an enumeration is. 
 
+Building a user defined type has a number of things that go into it, 
+The first step is to figure out and organize what elements it needs into a struct. 
 
+After defining what elements you need, you need to initialize those elements. We used a void, 
+that accepts a reference to our vector, and a size. 
 
+Developed the following elements for our custom type:
+- a struct for organizing the elements
+- an initializer function
+- a function to do something with the data
 
+the main issue pointed out with what we have is that the user has to know everything about the 
+implementation. to do anything they have to provide a size, know how to access the array, and
+how to call the initializer. it does seem somewhat manual. if I wanted to iterate through elem I 
+would need to also know the size and manual increment the pointer to go through the elems. 
+I couldn't utilize C++ iterators. 
+It would be usable for small things where I don't mind manually working through everything each 
+but if I were to pass it into a function, the function wouldn't know what to do with it. 
+Basically it's not usable by any of the standary library algorithms such as sort, etc. 
 
+I need to think of FUNCTIONS as USERS. The FUNCTIONS often USE MY TYPES. 
 
+. allows us to access struct members though a name like name.size
+-> allows us to access struct members through a pointer such as when we've passed a vector
+by reference. pointer->size for example 
 
+2.3.2 Classes
+I constructed the sort of precurser to a class in "user_defined_types.cpp"
+Classes seem almost like syntactic sugar and I need to investigate further to find out what 
+the differences are between using a struct + initializer function + functions that act on an 
+instance of the struct 
+vs 
+just using classes
 
+In the case of the Vector class we designed, the instances act primarily as a resource handle. 
+That is, they hold a pointer to some allocated memory, and the member functions allow us to 
+access, write/read, and act upon the data in some way. 
 
-
-
-
-
-
-
-
-
+2.3.3 Emumerations
+I have no idea what these are. They seem silly, What am I missing?
+Seems like it's just mapping things to integers? 
 
 
 
