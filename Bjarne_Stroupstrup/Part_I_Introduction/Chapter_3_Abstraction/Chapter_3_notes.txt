@@ -1,0 +1,24 @@
+Chapter 3 Abstraction mechanisms
+This chapter presents ways of defining and using new types including the basic properties, 
+implementation techniques, and language facilities used for concrete classes, abstract classes, 
+and class hierarchies. 
+
+Concrete classes
+Abstract classes
+Class Hierarchies 
+
+templates are introduced as a way to parameterize different types and algorithms together. 
+
+Concrete Classes - the representation is part of the definition 
+Concrete types behave just like built in types but with their own semantics as well. 
+
+member functions that require access to the representation must be defined in the class
+functions that do not require access to the private representation can be defined outside the class
+member functions defined IN the class are automatically inlined 
+
+3.2.1.2 A Container 
+
+
+
+
+
