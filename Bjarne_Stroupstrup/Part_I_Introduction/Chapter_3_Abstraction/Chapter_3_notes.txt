@@ -17,8 +17,42 @@ functions that do not require access to the private representation can be define
 member functions defined IN the class are automatically inlined 
 
 3.2.1.2 A Container 
+A container is a an object for holding a collection of elements. Vector hold elem, which is a pointer to an array of doubles
+so we call Vector a container. 
+Need to ensure that resources allocated by an instance of a class are released when the object is destroyed. 
+See 'container_1.cpp' 
+When control exits a scope, whatever objects were created there are destroyed. We need to ensure that whatever resources they
+control are also destroyed. Destroying a pointer does not destroy what the pointer points to. 
 
+const int* arr[] { new int arr[23] };   // allocate resources
+delete[] arr;                           // release resources
 
+RAII - Resource Aquisition Is Initialization 
+Basically we can avoid a lot of memory issues by just knowing how to implement classes smartly and by always using constructor/destructor pairs. 
 
+When working with arrays, remember that *arr means the same as arr[0], so you don't need a dereference operator when accessing elems like arr[234]
+
+Although it's possible to have a constructor that takes a size and initializes memory for the elements, you then have to read information into that memory.
+It makes more sense to initialize with a std::initializer_list since it already has a size() function 
+
+This section also introduces istream for some reason. Using push_back as an example 
+Vector::push_back() is usefull for input of artbitrary numbers of elements
+
+The entire point of the above section was to illustrate a concrete class - what did our class consist of? I extended the std::vector so that I could write 
+my own constructor while also leveraging the std::vector::push_back() capability. CustomVector essentially just takes a list of elements, puts them in 
+memory on the heap, holds a pointer to them, and gives us the ability to access them in the ways that we're already used to, subscript, etc. More than anything
+it's just a convient wrapper class to a some stuff in memory, but it behaves like a built-in type for the more part. would be more-so if I defined other operators
+like ++, +=, -=, *=, /=, and so on. The internal repesentation of CustomVector is part of the definition of CustomerVector.  
+There was some insulation from the representation, and I could make it more insulated if I wanted. For example I can access interal sz only through size(), but I 
+still have a way of finding out what the representation 'looks like' to some degree. I can directly learn about the properties of the representation. 
+
+3.2.2 Abstract Types 
+These completely insulate the user from the represenation details. So I wouldn't be able to learn how many elements are being stored, what type they are, etc. 
+An abstract type decouples the interface from the implementation details, and give up geniune local variables. How? 
+
+a virtual function is one that can be defined later in a class derived from this one. 
+=0 means pure virtual, and means the function MUST be defined in the subclass. 
+I missed some important points in the abstract types section. 
+I am still not sure why you want to define an interface and then redefine everything in the child class. What am I missing? 
 
 
