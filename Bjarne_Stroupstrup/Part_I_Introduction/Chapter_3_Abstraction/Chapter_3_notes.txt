@@ -56,3 +56,7 @@ I missed some important points in the abstract types section.
 I am still not sure why you want to define an interface and then redefine everything in the child class. What am I missing? 
 
 
+I'm still not 100% on the container example. 
+
+3.2.4 Class Hierarchies
+Shape examples 
