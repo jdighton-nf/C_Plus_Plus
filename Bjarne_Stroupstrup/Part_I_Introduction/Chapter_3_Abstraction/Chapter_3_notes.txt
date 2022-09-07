@@ -60,3 +60,19 @@ I'm still not 100% on the container example.
 
 3.2.4 Class Hierarchies
 Shape examples 
+When a function returns a bare pointer to an object allocated on the stack it is possible to leak memory if somewhere down the line 
+we forget to delete whatever the pointer points to. It becomes a manual process. 
+It's  better to return a std::unique_ptr because it will delete the object when its unique_ptr goes out of scope. 
+
+3.3.1 Copying containers 
+Memberwise copying of a resource handler object would violate the objects invariant. 
+Why? Maybe a part of the invariant is that it must be the only object with a pointer to the resource. 
+We wouldn't want to copy a pointer, rather we would want a constructor that returns a new object, which has initized some new memory that 
+contains copies of what was in the memory locations of the initial object. 
+This means that Object B gets it's own copy of whatever was in Object A and the elements are no longer connected in any way. 
+
+You need to think about if it makes sense for your object to be copied memberwise.
+Maybe it would be better to look at the pointer it holds and just copy the elements into some new resources. Copying a pointer from one thing
+to another does not create a unique copy of the elements. 
+
+
