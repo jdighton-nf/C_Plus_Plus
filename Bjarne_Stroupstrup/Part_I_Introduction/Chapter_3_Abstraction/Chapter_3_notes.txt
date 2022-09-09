@@ -75,4 +75,5 @@ You need to think about if it makes sense for your object to be copied memberwis
 Maybe it would be better to look at the pointer it holds and just copy the elements into some new resources. Copying a pointer from one thing
 to another does not create a unique copy of the elements. 
 
-
+I've been really hung up on move semantics. Watching a video St0MNEU5b0o on the topic. 
+Have a function create a vector and return it
