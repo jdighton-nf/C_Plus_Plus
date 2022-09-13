@@ -1,0 +1,101 @@
+If slowly work through this chapter then I should fully understand the syntax and all the basic built-in types when I emerge from the other end. 
+
+6.1 The C++ ISO Standard
+The standard cannot tell you what good code looks like, only what the programmer can and cannot rely on from an implementation. 
+
+Many things are deemed 'implementation defined' by the standard. What exactly does this mean? Each implementation must provide a specific, well-defined 
+behavir for a construct and that behavior must be documented. Examples:
+
+unsigned char c1 = 64;  // well defined. a char always has at least 8 bits. 
+unsigned char c2 = 1256;    // implementation defined, will result in shortening if a char has only 8 bits on the specific implementation. 
+
+0b10011101000 = 1256    requires 11 bits to represent, truncate to 8 bits. if you have a 16 bit char this would be fine. 
+   0b11101000 = 232     cut off all the bits left of position 8 and you end up with 232
+
+Most implementation defined features will relate to differences in the hardware used to run the program. 
+
+Behaviours can also be 'unspecified'. This means that there is a range of possible behavior that is acceptable. 
+Many assumptions about implementation-defined features can be checked by stating them as static assertions. 
+
+To maximize portability we should be explicite about what implementation defined features we rely on. 
+We would present all dependencies on hardware sizes in the form of constants in a header file. 
+
+Optimizers can further complicate a problem where undefined behavior is concerned because the consequences become further abstracted and unpredicable.
+
+There are different types of implementation FREESTANDING and HOSTED. 
+A freestanding implementation may provide fewer std libs and may provide the following separatly: cstdef, cfloat, limits, climits, cstdint, csdtlib, new, typeinfo, 
+exception, initializer_list, cstalighn, cstdarg, cstdbool, type_traits, atomic
+Some implementations also provide a non-standard exeption-free environment for close-to-the-hardware environments. 
+
+6.1.2 The basic source character set 
+Some char sets might not include all the chars we use for coding such as [ or {. Doesn't really concern me yet. 
+
+6.2 Types
+consider x=y+f(2);
+the names x, y, and f must be declared for this fragment to have any meaning. 
+
+There are several fundamental types from which everything else is constructed.
+integral types (bool & char & int)
+arithmetic types (integral types & floating point types)
+integral means essential or fundamental 
+these types are provided in a variety of sizes to give the programmer a choice about the ammount of storage consumed, the precision, and the range available for computations. 
+
+How are floats represented in memory? (sidetrack)
+significant == mantissa 
+3.14159 decimal == 0.7853975 * 2^2 
+0.7853975 is the mantissa 
+
+ 3 32222222 22211111111110000000000
+ 1 09876543 21098765432109876543210
++-+--------+-----------------------+
+| |        |                       |
++-+--------+-----------------------+
+sign exponant mantissa
+
+I will spend some time on this eventually but it's too far off course for right now. 
+
+6.2.3 Character types
+Several distinct types. char, signed char, unsigned char, wchar_t, char16_t, char32_t
+
+A char is almost always 8 bits, which meanst it can hold 256 different values. 
+There are some assumptions that are not safe to make, for example a char might not be a byte on certain embedded processors that lack byte accessing hardware. 
+
+if you add an int to a char, the char gets converted to an int and the whole expression returns an int 
+
+the int ==> char exersize makes sense now. It's all about the datatype, because that determines how the value is represented. also, cout will represent it based on the 
+datatype. 
+
+6.2.3.1 Signed and unsigned characters
+a plain char could be signed, or unsigned. this is implementation specific. it could range from 0 to 255, or -127 to 127
+on a machine where char is signed 11111111 == -1, unsigned 11111111 == 255
+
+I don't really understand why this is. I would expect 00000001 to 1, and 100000001 to be -1 
+Ok I figured it out. Why bother with using the far right but as 1, when you're already using the far left bit as a -1. 
+11111111 == 255, or -1 if unsigned
+00000000 == 0, 10000000 would be -0 which makes no sense so we skip it and do 11111111 to mean -1, then we flip the bits 
+11111110 == -2 
+
+all the ascii symbols are stuck between 0 and 127 so they'll work whether the char is signed or unsigned. there are just some subleties about the concept of a 
+signed char that are mysterious to me still. 
+
+// so basically the way it works with a signed char is that they run from 0 to 127 and -127 back down to -1 when the underlying value is represented as usign char 
+
+6.2.3.2 Character Literals 
+We can represent a character from the implementation character set as a one, two, or three digit octal number like \000 or as a hex number like \x000
+
+Some notes about istream >> char in a for loop like for(auto x : cin >> x){ print(x) }
+It's important to fully realize that cin is a stream, and so it behaves like a stream. cin askes for input and fills its internal representation with the provided chars. 
+Then when you apply the extraction operator it moves a char into x and returns true, this happens as many times as it is valid to do to. when it has spit its entire 
+representation out it sets an error bit and the returns false to the condition check. in this way you can manage streams directly. 
+
+6.2.4 Integer Types
+each integer types comes with three forms, plain, signed int, and unsigned int 
+they also come in four sizes. short int, int, long int, long long int 
+The unsigned types are great for used that treat storage as a bit array. 
+Additional integer types are available in <cstdint> 
+- int64_t signed int with exactly 64 bits
+- uint_fast16_t unsigned, 8 bits, supposedly the fast int but it seems like it would be hardware dependent 
+- int_least32_t
+
+6.2.4.1 Integer Literals
+
