@@ -115,3 +115,6 @@ all int types directly map their values into the bits and so the largest number 
 floats utilize a different scheme and are composed of an exponant and a mantissa. I will watch some youtube videos on it. 
 The default floating point is a double, for example 3.34 or 2.23423e+23 will be doubles. 
 You need to specify plain floats like 2.3F and longs like 2342.33332342L. The suffix gives the literal a type. 
+I need to master float points before I move to anything else. 
+
+I'm really tempted to delve into different char types right now and I'm interested in std::basic_string<> but I'll wait till I get there naturally. 
