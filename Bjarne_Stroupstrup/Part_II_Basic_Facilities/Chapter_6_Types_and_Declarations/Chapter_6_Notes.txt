@@ -51,7 +51,6 @@ significant == mantissa
 | |        |                       |
 +-+--------+-----------------------+
 sign exponant mantissa
-
 I will spend some time on this eventually but it's too far off course for right now. 
 
 6.2.3 Character types
@@ -98,4 +97,21 @@ Additional integer types are available in <cstdint>
 - int_least32_t
 
 6.2.4.1 Integer Literals
+You can represent integers as hex values like 0xFFFF (65535)
 
+6.2.4.1 Types of Integer Literals 
+A decimal with no suffix will be represented as the first of these types in which it can be represented. 
+int, long int, long long int 
+
+on my system a short int appears to be a signed 16bit value, ie 65535 truncates to -1
+a short unsigned int can hold up to 65535
+a short signed int can hold up to 32767
+
+a literal in the form 2.14748365e-9 is necessarily a double and will try to implicitly convert to a double 
+
+6.2.5
+Floating points are a totally different beast from integers
+all int types directly map their values into the bits and so the largest number they can represent is determined by the available bits. 
+floats utilize a different scheme and are composed of an exponant and a mantissa. I will watch some youtube videos on it. 
+The default floating point is a double, for example 3.34 or 2.23423e+23 will be doubles. 
+You need to specify plain floats like 2.3F and longs like 2342.33332342L. The suffix gives the literal a type. 
