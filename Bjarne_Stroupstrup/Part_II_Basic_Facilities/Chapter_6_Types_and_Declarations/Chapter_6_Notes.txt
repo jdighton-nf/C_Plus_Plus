@@ -117,4 +117,159 @@ The default floating point is a double, for example 3.34 or 2.23423e+23 will be 
 You need to specify plain floats like 2.3F and longs like 2342.33332342L. The suffix gives the literal a type. 
 I need to master float points before I move to anything else. 
 
-I'm really tempted to delve into different char types right now and I'm interested in std::basic_string<> but I'll wait till I get there naturally. 
+I spent a couple hours learning some things about binary that I was never clear on and I'll sum them here to test myself. 
+1-s compliment - this is basically where you just flip the bits on all negative values, and set the sign value to 1. This has a problem where you end up with 
+0: 0000 and also -0: 1111. Also, whenever you do an addition, you have to range shift the answer each time. Also, carrys have to be kicked back around to the right 
+side which makes hardware design a pain 
+
+2-s compliment is different. It's similar to 1-s compliment in the sense that you still take the compliments of a number to make it negative, but the entire set of 
+negative numbers is mapped differently. 
+
+to make a positive binary a 2-s compliment negative, apply this algorithm. 
+1) Add -1 to the number, ie. 0010(2)+1111(-1) == 1100
+2) take the compliment to obtain -1 : 1100
+
+to make a negative into a positive you do this:
+1) take the compliment
+2) add 1
+
+Also learned about float point numbers. IEEE 754
+1 sign bit, 8 exponant bits, 23 mantissa bits with the MSB implied so actually 24 bits of storage
+
+1) have a number like 23.345
+
+2) convert the number to pure binary like 10111.00111110101110000101
+
+3) normalize the number 1.011100111110101110000101 * 2^4
+
+4) bias the exponant, for IEE475 32 bit the bias is 127. 4 + 127 = 131
+
+5) convert exp to bin. 131 : 10000011
+
+6) place in bits according to position. Truncate left most bit from mantissa. 
+
+|0|10000011|01110011111010111000010|
+ ^     ^              ^
+ |     |              |-- mantissa 
+ |      --- exponant
+ |--- sign bit
+
+01000001101110011111010111000010 = 23.345
+01000001101110101100001010001111
+
+6.2.7 Void
+There are no object of type void. Void it used as a psuedotype to indicate that a function returns no value. 
+
+6.2.8 sizes
+The exact size of an int is implementation dependent, so hardcoding sizes is a bad idea and will harm portability.
+Don't make unwise assumptions about the portability of types. 
+For example, if a system has a 32 bit int, and you require an int that has 32 bits, don't assume that all systems have a 32 bit int. Check the environment and
+pick the types appropriate for your application. 
+
+If you want a particular size of int you can include <cstdint> whic defines a variety of type aliases
+
+<cstddef> defines size_t which is an implementation defined unsigned int type that can hold the size in bytes for any object. 
+<cstddef> also defined ptrdiff_t which hold the result of subtracting to ptrs to get the number of elements 
+
+6.2.9 Alignment
+An object doesn't only need enough storage to hold it's representation, it also needs the proper alignment in order for the data to be accessible, efficiently, or at all. 
+What are boundaries? 
+A 4-byte int often has to be aligned on on a word (4-byte) boundary. What does this mean? 
+It sounds like you can't just store whatever you want at any address. The address must be divisible according to the data type. 
+Bytes can go anywhere. 
+Halfword data must have even number addresses
+Word data must have addresses divisble by 4
+Doubleword Data must have addresses divisble by 8 
+So basically memory is chunked out into boundaries, and you just have to fit data in where appropriate. 
+the 'buffer' placeholder syntax in the example is confusing. not sure what he's trying to convey. 
+I'm not going to worry about alignment since it's unlikely i'll need to care for a quite a while. 
+
+6.3 Declarations
+You have to declare things so the compilers knows what they are. 
+extern tells the compiler that the variable is defined in another source module outside the current scope. 
+Definitions that do not set aside memory do not belong in interfaces. 
+
+6.3.1 Structure of Declarations
+*(*)[] what the hell does this mean? 
+I see some indication that maybe it's a function pointer but the syntax seems to be missing something. 
+
+The most common declarator operators: 
+pre * pointer
+pre *cont const pointer
+pre *volatile pointer
+pre & lvalue ref
+pre && rvalue ref
+pre auto - function - infer return type
+post [] array
+post () function
+post -> returns from function 
+
+postfix declarator operators bind tighter than the prefixes 
+char* kings[] is an array of pointer to char
+char(*kings[]) is a pointer to an array of char 
+you have to use parenthesis to express types such as "pointer to array" and "pointer to function" 
+
+I think I by bind tighter, they mean 'takes precidence'
+
+char* kings[], first we care about the array operator (postfix)
+   1) kings is an array - what is kings an array of? 
+   2) next we see the pointer operator (prefix) so we know that the array hold pointers to chars
+
+char (*kings[])
+   the post and pre operators are grouped to kings with a set of parens, this inverts the precidence
+   1) kings is a pointer - what is kings a pointer to? 
+   2) we then care about the array operator, so we know that kings is a pointer to an array
+   3) what is kings a pointer to an array of? kings is a pointer to an array of chars
+
+I really hate this syntax because it is ambiguous but I'll let it sink in. this is probably one of those times where I have to forget
+about being able to read and parse the syntaxs meaning, and just remember that it means when I see parenthesis grouping together a postfix, prefix, and a name  
+
+char (*kings())
+   1) the prefix, postfix, and name are grouped by parens so the precidence is inverted
+   2) kings is a pointer
+   3) kings is a pointer to a function 
+
+as a note, the ++ operator appears to return whatever value it increments 
+
+The takeaway, parenthesis make a big difference. Think carefully about this. 
+
+6.3.3 Names 
+Use them
+
+6.3.3.1 Keywords
+C++ has a lot of Keywords
+out of these I know the following: 
+char, constexpr, do, extern, if, new, or, static_asset, typename, alignof, char16_t, double, false, inline, return, throw, wchar_t, 
+and, bool, char32_t, continue, float, int, not, private, short, struct, true, unsigned, while, break, class, else, for, long, signed, switch, 
+try, using, xor, case, default, enum, nullptr, public, sizeof, template, virtual, auto, catch, const, delete, namespace, operator, this, void
+
+I do not know these, or do not understand them well. 
+bitand, reinterpret_cast
+thread_local
+volatile
+bitor
+or_EQ
+union
+and_eq
+decltype
+not_eq
+protected
+assume
+complicate
+friend
+mutable
+typedef
+xor_eq
+explicite
+register
+static
+typeid
+
+6.3.4 Scope 
+
+6.3.5 Initialization 
+
+
+
+
+
