@@ -269,7 +269,68 @@ typeid
 
 6.3.5 Initialization 
 
+6.3.5.3 The decltype() Specifier
+We can use auto when we have a suitable initializer. But sometimes we want to have a type deduced without defining an initialized variable. 
+Consider a function that adds two matrices of potentially different types. What should be the type of the result of the addition.? 
+What should be the type of its elements? 
 
+template<class T, class U>
+auto operator+(const Matrix<T>& a, const Matrix<U>& b) −> Matrix<decltype(T{}+U{})>
+// accept two matrices that might hold items of different types 
+// return a matrix where the element type is the sum of the types of T and U
+{
+   Matrix<decltype(T{}+U{})> res;
+   for (int i=0; i!=a.rows(); ++i)
+      for (int j=0; j!=a.cols(); ++j)
+         res(i,j) += a(i,j) + b(i,j);
+   return res;
+}
 
+In c++ there are two syntaxes for function declaration: 
 
+Type Identifier (args)
 
+auto Identifier (args) -> return type 
+
+In a template, the keywords class and typename are interchangable in the basic case of specifying a template: 
+Based on what I'm seeing, the class keyword limits it to classes, but typename will work for all. 
+
+How on earth do you call a template function? 
+
+6.4 Objects and Values - this section will be critial to understand completely. 
+and Object is a contiguous region of storage, and an L value is something that refer to that Object 
+a nonconst object is often called a modifiable L value. 
+
+6.4.1 Lvalues and Rvalues - again, critical to understand 
+An L value refers to an area of contigous storage. example. 
+
+int sz { 64 }
+char (*arr[]) { new char[sz] }; 
+Arr is an L value that holds a pointer to a location in memory where an array of chars is stored. 
+In this case, sz is an L value because it refers to the location in memory where 64 is stored, however temporarily. 
+
+There are two properties when it comes to addressing, copying, and moving: 
+Has Identity: the program has the name of, pointer to, or reference to the object so that it is possible to determine if two objects are the same. 
+   ie. Are their addresses the same? 
+
+Movable: can the object be moved instead of copied? 
+
+lvalues: has identity, not Movable
+rvalues: is movable
+
+vectors provide mode semantics, which is pretty cool. 
+
+6.4.2 Lifetimes of Objects
+Automatic - normally objects are destroyed when they go out of scope 
+Static - the object is never destroyed and lives at the same address until program termination 
+Free store - created with new and destoyed with delete
+temp objects - eg. intermediate results in a computation or an object used to hold a value for a reference to const argument.
+               they live till the end of the full expression that they are a part of. their lifetime is detemined by their use. 
+thread-local objects - objects are created when their thread is, and destoyed when their thread is 
+
+static and automatic are STORAGE CLASSES 
+
+6.5 Type aliases
+using Pchar = char*; // Pchar is an alias for char* 
+
+typedef char* Pchar; // older syntax that means the same thing as the using version 
