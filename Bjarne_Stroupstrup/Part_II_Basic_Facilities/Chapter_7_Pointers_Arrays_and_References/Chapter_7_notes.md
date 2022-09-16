@@ -42,6 +42,31 @@ In a declaration, * is used to indicate the var is a pointer. Example
 **7.2.1 void*** 
 Sometimes you need to pass or store along an address of a memory location without knowing what type of object is stored there. 
 
+Function using void* pointers typically exist at the very lowest level of the sytem, where real hardware resources are manipulated.
+Example: 
+
+```
+{
+    void* my_alloc(size_t n); // allocate n bytes from my special heap  
+}
+```
+
+**7.2.1 nullptr** 
+The literal nullptr represents the null ptr. 
+
+```
+{
+    int* pi = nullptr; 
+    double* pd = nullptr; 
+    int i = nullptr; // error: i is not a nullptr 
+}
+```
+
+Before nullptr was introduced, 0 was used as a notation for the nullptr
+
+
+
+
 
 
 
