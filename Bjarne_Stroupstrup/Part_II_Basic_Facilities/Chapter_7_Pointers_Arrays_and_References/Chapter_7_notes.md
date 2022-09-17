@@ -64,7 +64,13 @@ The literal nullptr represents the null ptr.
 
 Before nullptr was introduced, 0 was used as a notation for the nullptr
 
-
+**Arrays**
+Use them in small scopes for small applications. 
+Prefer the better behaved types when possible such as vector, or array. 
+DO NOT USE DELETE when something is allocated on the stack. It's a stupid idea. 
+Control the lifetime of objects on the heap by using a resource handle like string, vector, or 
+unique_ptr 
+Often a char* or const char* is expected to point to a zero-terminated sequence of chars. 
 
 
 
