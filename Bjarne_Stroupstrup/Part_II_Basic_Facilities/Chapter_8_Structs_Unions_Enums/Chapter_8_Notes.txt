@@ -1,0 +1,10 @@
+A struct is simply a class where the members are public by default.
+
+Structs are kind of cool because defining one seems to also define a sort of default constructor. So depending on how the struct is layed out you can just declare one with 
+the appropirate inputs in the appropirate order and it just build it for you without defining an explicit constructor. 
+It's sort of like an implied constructor. 
+
+Actually it's not. A struct is layed out in memory in a particular order and when you use brace initialization you're basically just giving what it expects layed out the same 
+way, so it just sticks it where it goes and calls it good. 
+
+
